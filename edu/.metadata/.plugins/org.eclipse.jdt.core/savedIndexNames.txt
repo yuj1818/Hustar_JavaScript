@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+D:\Hustar\tools\dev\workspace\edu\.metadata\.plugins\org.eclipse.jdt.core
+3481095645.index
+2578073755.index
+1865797976.index
