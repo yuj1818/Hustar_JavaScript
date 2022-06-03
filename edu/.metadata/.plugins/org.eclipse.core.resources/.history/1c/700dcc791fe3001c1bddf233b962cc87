@@ -269,9 +269,10 @@
 				game_time++;
 				//게임 종료 기능 호출 필요
 			}
-			words_shuffle();
+			
 			//표출된 단어 수 
 			if (game_status != "pause") {
+				words_shuffle();
 				word_view_count = 0;
 			}
 			//지정한 시간 마다 단어 표출하기
@@ -281,13 +282,15 @@
 				if (word_view_count >= words[lan_type].length){
 					clearInterval(word_viewer_obj);	//Interval의 반복 동작을 멈춤 (parameter: Interval Object)
 				} else{
-					let game_main_el = document.getElementById("game_main");
-					let div_value = game_main.clientWidth/10;//game_main element의 width값
-					let random_x_index = Math.floor(Math.random() * 9);//0~9
-					let x_point = random_x_index * div_value;//랜덤 x pixel 좌표
-					
-					//HTML element 동적 생성
-					let span = document.createElement("span");//javascript 구문
+					if (game_status != "pause") {
+						let game_main_el = document.getElementById("game_main");
+						let div_value = game_main.clientWidth/10;//game_main element의 width값
+						let random_x_index = Math.floor(Math.random() * 9);//0~9
+						let x_point = random_x_index * div_value;//랜덤 x pixel 좌표
+						
+						//HTML element 동적 생성
+						let span = document.createElement("span");//javascript 구문
+					}
 					span.setAttribute("class", "word");
 					span.style.position = "absolute";
 					span.style.left = x_point + "px";//javascript 구문
@@ -325,9 +328,6 @@
 		//단어 섞기
 		function words_shuffle () {
 			for (let i = 0; i < words[lan_type].length; i++){
-				if (game_status == "pause"){
-					break;
-				}
 				let value = Math.random();//value:0 ~ 1이하
 				let random_index = Math.floor(value * words[lan_type].length);
 				let firstValue = words[lan_type][i];

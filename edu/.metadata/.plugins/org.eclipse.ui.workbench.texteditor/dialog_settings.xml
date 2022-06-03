@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="word_view"/>
+		<item key="selection" value="shuffle"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="word_view"/>
-			<item value="word_view_count"/>
-			<item value="word_veiw_count"/>
-			<item value="appendChild"/>
+			<item value="shuffle"/>
+			<item value="status"/>
+			<item value="html"/>
+			<item value="red"/>
+			<item value="byclass"/>
+			<item value="flg"/>
+			<item value="pause"/>
+			<item value="english"/>
+			<item value="lan_type_change"/>
+			<item value="lan_type"/>
+			<item value="len_type"/>
+			<item value="html_reset"/>
+			<item value="block"/>
+			<item value="false"/>
+			<item value="isconfirm"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1046"/>
+		<item key="DIALOG_X_ORIGIN" value="651"/>
 		<item key="DIALOG_Y_ORIGIN" value="176"/>
 		<item key="DIALOG_WIDTH" value="288"/>
 		<item key="DIALOG_HEIGHT" value="391"/>

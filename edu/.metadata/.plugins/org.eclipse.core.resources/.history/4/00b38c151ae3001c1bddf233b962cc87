@@ -29,15 +29,15 @@
 				/*margin 값이 2개만 있으면 앞에 거는 위아래, 뒤에 거는 양쪽으로 해석*/
 			}
 			
-			#background_red {
+			.background_red {
 				background-color: #e15555;
 			}
 			
-			#background_green {
+			.background_green {
 				background-color: #357435;
 			}
 			
-			#background_gray {
+			.background_gray {
 				background-color: #c5c5c5;
 			}
 			
@@ -107,9 +107,9 @@
 		</div>
 		
 		<div class="text_center" style="margin-top: 25px">
-			<button class="game_management_btn" id = "background_green" onclick="start()">게임시작</button>
-			<button class="game_management_btn" id = "background_gray" onclick="pause()">일시정지</button>
-			<button class="game_management_btn" id = "background_red" onclick="end()">게임종료</button>
+			<button class="game_management_btn background_green" onclick="start()">게임시작</button>
+			<button class="game_management_btn background_gray" onclick="pause()">일시정지</button>
+			<button class="game_management_btn background_red" onclick="end()">게임종료</button>
 		</div>
 		
 		<div id="popup_background" onclick="document.getElementById('popup_background').style.display='none';">
@@ -173,8 +173,6 @@
 		//언어 설정 값
 		let lan_type = null;
 		
-		
-		let pause_flg = false;
 		/* 
 			게임 시작 전
 				↳언어 설정(default값: 한글)
@@ -202,7 +200,7 @@
 			document.getElementById("words_size").innerHTML = words[lan_type].length;
 			document.getElementById("answer_size").innerHTML = answer_size;
 		
-			document.getElementById("game_main").innerHTML = "";
+			//document.getElementById("game_main").innerHTML = "";
 		}
 		
 		//언어 설정(클릭 시)
@@ -257,9 +255,11 @@
 				return;
 			}
 			
-			if (game_status != "pause") {
-				reset();//데이터 및 html 초기화	
-			}
+			game_status = "start";
+			
+			reset();//데이터 및 html 초기화	
+			
+			words_shuffle();
 			
 			//시간 카운트 다운
 			//setInterval(콜백함수, 속도(단위:ms))
@@ -269,11 +269,9 @@
 				game_time++;
 				//게임 종료 기능 호출 필요
 			}
-			words_shuffle();
+			
 			//표출된 단어 수 
-			if (game_status != "pause") {
-				word_view_count = 0;
-			}
+			word_view_count = 0;
 			//지정한 시간 마다 단어 표출하기
 			word_viewer_obj = setInterval(word_view, _word_speed * 1000)
 			//단어 한개씩 표출하기
@@ -319,15 +317,11 @@
 					}
 				}
 			}
-			game_status = "start";
 		}
 		
 		//단어 섞기
 		function words_shuffle () {
 			for (let i = 0; i < words[lan_type].length; i++){
-				if (game_status == "pause"){
-					break;
-				}
 				let value = Math.random();//value:0 ~ 1이하
 				let random_index = Math.floor(value * words[lan_type].length);
 				let firstValue = words[lan_type][i];
@@ -393,17 +387,15 @@
 		}
 		
 		function pause(){
-			game_status = "pause";
 			if(pause_flg){
-				document.getElementById("game_main").style.backgroundColor = "#fff";
-				document.getElementById("background_gray").innerHTML = "일시정지"
-				start();
-			} else{
-				document.getElementById("game_main").style.backgroundColor = "#777";
-				document.getElementById("background_gray").innerHTML = "재개"
+				game_status = "pause";
 				clearInterval(game_count_down_obj); //시간 카운트 기능, 종료
 				clearInterval(word_viewer_obj); //단어 HTML 생성 및 표출 기능, 종료
 				clearInterval(word_y_position_change_obj); //단어 아래로 내리기 기능, 종료
+			} else{
+				game_count_down_obj_return = setInterval(game_count_down_obj,500);
+				word_viewer_obj_return = setInterval(word_viewer_obj,500);
+				word_y_position_change_obj_return = setInterval(word_y_position_change_obj,500);
 			}
 			pause_flg = !pause_flg;
 		}
