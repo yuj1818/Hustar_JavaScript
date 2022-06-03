@@ -9,38 +9,91 @@
 			}
 			#test_id{
 				width: 500px; height: 500px;
+			}
+			div {
+				background-color: green /* !important 우선순위 조정*/;
 			}	
 		</style>
 	</head>
 	<body>
-		<div style="border: 1px solid red; background-color:red; width: 100px; height: 100px;">
+		<div onmouseover="console.log('온마우스오버'); test_mouseover();" style="border: 1px solid red; background-color:red; width: 100px; height: 100px;">
 			test1 class
 		</div>
 		
-		<div class="test_class">
+		<div class="test_class" id="test_id">
 			test2 class
 		</div>
 		
 		<div class="test_class">
-			test3 class
 		</div>
 		
 		<div class="test_class">
-			test4 class
 		</div>
 		
 		<div class="test_class" id="test_id">
-			test5 class
 		</div>
 	</body>
 	<script>
 		var data = 1;
 		var data2 = 3;
+		var data3 = '3';
+		
+		var json = {
+				a:1,
+				b:2,
+				c:'문자',
+				arr: [1,2,3],
+				dic:{
+					arr:[1,2.3,5,'5']
+				}
+		};
+		
+		var object = {};
+		var arr = [1,2,3];
+		var integer = 1;
+		var double_and_float = 1.1;
+		var boolean_type = true;
+		var function_type = function test_function (param1, param2) {
+			console.log("function_type param: ", param1, param2);
+		}
+		function_type(1, [1,2,3]);
+		
+		//배열 for문
+		for(var i = 0; i < arr.length; i++){
+			console.log("index " + i + ", value : " + arr[i]);
+		}
+		
+		//Object for문
+		for (var key in json) {
+			console.log("key : ", key, "value : ", json[key]);
+		}
+		//Object value값 꺼내기
+		console.log("json.a : ", json.a);
+		console.log("json['a'] : ", json['a']);
+		
+		console.log("json key value 추가 전 : ", JSON.stringify(json));
+		
+		//Object key value 추가
+		json.d = 1;
+		json['e'] = 'E';
+		console.log("json key value 추가 후 : ", JSON.stringify(json));
+		
+		
+		
 		console.log("data + data2: ", data + data2);
-		test_function(data,data2);
+		var return_value = test_function(data,data2);
+		
+		console.log("return_value : ", return_value);
 		
 		function test_function (data, data2) {
 			console.log("test_functon - data + data2: ", data + data2);
+			return 0;
+		}
+		
+		function test_mouseover (){
+			console.log("test_mouseover");
+			document.getElementById("test_id").style.width = "50px";
+			document.getElementById("test_id").style.backgroundColor = "#BCE55C";
 		}
 	</script>
 </html>

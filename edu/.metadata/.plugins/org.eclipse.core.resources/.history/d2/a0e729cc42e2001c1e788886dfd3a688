@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>산성비 게임</title>
+		<style>
+			.game_main {
+				border: 3px solid #000;
+				width: 100%;
+				height: 500px;
+			}
+			
+			input#answer {
+				width: 300px;
+				height: 30px;
+			}
+			
+			button#answer_submit {
+				height:  35px;
+			}
+			
+			.game_management_btn {
+				width: 165px;
+				height: 50px;
+				/* top right botton left*/
+				margin: 0px 5px;
+				/*margin 값이 2개만 있으면 앞에 거는 위아래, 뒤에 거는 양쪽으로 해석*/
+			}
+			
+			.background_red {
+				background-color: #e15555;
+			}
+			
+			.background_green {
+				background-color: #357435;
+			}
+			
+			.background_gray {
+				background-color: #c5c5c5;
+			}
+			
+			.text_center {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h1 class="text_center">산성비</h1>
+		
+		<div class="game_main" id="game_main"></div>
+		
+		<div class="text_center" style="margin-top: 25px">
+			<span style="margin-right: 15px;">
+				생명 : 
+				<span id="life">0</span>
+			</span>
+			
+			<span style="margin-right: 15px;">
+				<input id="answer" type="text"/>
+				<button id="answer_submit">확인</button>
+			</span>
+			
+			<span>
+				맞춘단어 개수 : 
+				<span id="words_size">0</span>
+				/
+				<span id="answer_size">0</span>
+			</span>
+		</div>
+		
+		<div class="text_center" style="margin-top: 25px;">
+			<span style="font-weight: bold; margin-left: 10px;">언어 설정 : </span>
+			<label for="korean">한글</label><input id="korean" name="lan_type" type="radio"/>
+			<label for="english">영어</label><input id="english" name="lan_type" type="radio"/>
+		</div>
+		
+		<div class="text_center" style="margin-top: 25px">
+			<button class="game_management_btn background_green">게임시작</button>
+			<button class="game_management_btn background_gray">일시정지</button>
+			<button class="game_management_btn background_red">게임종료</button>
+		</div>
+	</body>
+	
+	<script>
+		
+		
+		
+		
+		/*
+			게임 종료
+				↳단어 한개씩 표출하기 -> 중단 or 다 삭제
+					↳표출된 단어 밑으로 내리기 -> 중단 or 다 삭제
+				↳게임 수행 결과 표시(맞춘 단어 개수, 오타 개수, 남은 생명)
+				↳생명 0으로 만들기 -> 선택
+				↳맞춘 개수 0으로 만들기 -> 선택
+		*/
+		
+		/*
+			일시정지
+				↳단어 한개씩 표출하기 -> 중단 -> 일시정지 중인 것을 확인 할 수 있도록 표시
+				↳표출된 단어 밑으로 내리기 -> 중단
+		*/
+		
+		//생명
+		const _life = 3;
+				
+		//게임 총 진행 시간
+		const _game_time = 60;
+		
+		//단어가 내려오는 속도
+		const _word_speed = 1;
+				
+		//단어 목록
+		let words = {
+				korean: ["집어넣다", "통계", "파일", "판", "피해자"],
+				english: ["aaa", "bbb", "ccc", "ddd", "eee"]
+		};
+					/* "집어넣다", "통계", "파일", "판", "피해자","필수적","학용품","환하다","화분","감기","강남","구속되다",
+					"돌아다니다","등등","멋지다","반팔","반찬","방지","베다","보장하다","세다","소개되다","씨","안쪽","억울하다",
+					"오가다","요구되다","음성","이윽고","장식","전개하다","전날","전반적";*/
+		
+		//현재 생명
+		let life = 0;
+		
+		//맞춘 단어 개수
+		let answer_size = 0;
+		
+		//오타 개수
+		let wrong_size = 0;
+		
+		//현재 게임 시간
+		let game_time = 0;
+		
+		//언어 설정 값
+		let lan_type = "korean";
+		
+		/* 
+			게임 시작 전
+				↳언어 설정(default값: 한글)
+				↳초기화
+					↳생명 = 3
+					↳맞춘 개수 = 0
+					↳오타 개수 = 0
+		*/
+		//java script data 초기화
+		function reset () {
+			life = _life;
+			answer_size = 0;
+			wrong_size = 0;
+			game_time = _game_time;
+			len_type = "korean";
+			
+			html_reset();
+		}
+		
+		//data 초기화 후, html 초기화
+		function html_reset () {
+			document.getElementById("life").innerHTML = life;
+			document.getElementById("words_size").innerHTML = words[lan_type].length;
+			document.getElementById("answer_size").innerHTML = answer_size;
+		}
+		
+		/*
+			게임 시작
+				↳시간(초) 카운트 다운
+				↳단어 섞기
+				↳단어 한개씩 표출하기(몇초 단위로?, 위치 x 를 무작위로 정해주기)
+					↳표출된 단어들을 밑으로 내리기(하강 속도는? (단위:초?))
+				↳생명이 하나씩 깎이도록 하기
+					↳게임 메인 영역에 단어가 맨 밑으로 내려갔을 때
+					↳정답을 잘못 입력했을 때
+				↳게임 종료 하기
+					↳생명이 0이 되었을 때
+					↳정답을 다 맞추었을 때
+					↳종료 버튼 눌렀을 때
+				↳정답을 맞추면
+					↳맞춘 단어 개수를 증가 시키기 -> 화면에 표시해주기
+					↳맞춘 단어 화면에서 지워주기
+				
+		*/
+		
+		function start() {
+			reset();//데이터 및 html 초기화	
+		}
+		
+		//단어 섞기
+		function words_shuffle () {
+			for (let i = 0; i < words[lan_type].length; i++){
+				let value = Math.random();//value:0 ~ 1이하
+				let random_index = Math.floor(value * words[lan_type].length);
+				let firstValue = words[lan_type][i];
+				let randomIndexValue = words[lan_type][random_index];
+				words[lan_type][i] = randomIndexValue;
+				words[lan_type][random_index] = firstValue;
+			}
+		}
+		
+		//시간 카운트 다운
+		//setInterval(콜백함수, 속도(단위:ms))
+		let game_count_down_obj = setInterval(game_time_add, 1000);
+		//게임 시간 증가 시키기
+		function game_time_add(){
+			game_time++;
+			//게임 종료 기능 호출 필요
+		}
+		
+		//단어 한개씩 표출하기
+		function word_viewer() {
+			let game_main_el = document.getElementId("game_main");
+			console.log("game_main_el : ", game_main_el.width)
+		}
+		
+	</script>
+	word_viewer();
+</html>
