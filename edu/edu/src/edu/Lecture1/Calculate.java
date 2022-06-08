@@ -40,7 +40,7 @@ public class Calculate {
 				System.out.println("올바른 기호를 입력하세요");
 			}
 			
-			if (mark.equals("+")) {
+			/*if (mark.equals("+")) {
 				firstValue += secondValue;
 			} else if(mark.equals("-")) {
 				firstValue -= secondValue;
@@ -48,7 +48,10 @@ public class Calculate {
 				firstValue *= secondValue;
 			} else if(mark.equals("/")) {
 				firstValue /= secondValue;
-			}
+			}*/
+			
+			CalFunction cf = new CalFunction();
+			firstValue = cf.calFunction(firstValue, secondValue, mark);
 		}
 		
 		System.out.println("");
