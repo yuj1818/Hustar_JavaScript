@@ -14,17 +14,24 @@
 		</style>
 	</head>
 	<body>
-		<table class="table_css">
-			<tr>
-				<td>제목</td>
-				<td>
-					<input type="text" id="board_title">
-				</td>
-				<td>내용</td>
-				<td>
-					<input type="text" id="board_contents">
-				</td>
-			</tr>
-		</table>
+		<form action="/board/insert" method="post">
+			<table class="table_css">
+				<tr>
+					<td>제목</td>
+					<td>
+						<input type="text" id="board_title" name="boardTitle">
+					</td>
+					<td>내용</td>
+					<td>
+						<input type="text" id="board_contents" name="boardContents">
+					</td>
+				</tr>
+			</table>
+			<button type="submit">등록</button>
+		</form>
+		
+		<script>
+			
+		</script>
 	</body>
 </html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+	
+	<!-- 등록 SQL -->
+	<insert id="boardInsert" parameterType="com.hustar.mvc.board.vo.BoardVO" useGeneratedKeys="true" keyProperty="boardNo">
+		INSERT INTO board (
+			<!-- board_no -->
+			board_title
+			, board_contents
+			, create_user
+			, create_date
+			, update_user
+			, update_date
+			, hits
+		) VALUES  (
+			<!-- (SELECT 1 + IFNULL(MAX(a.board_no),0) FROM board a) -->
+			#{boardTitle}
+			, #{boardContents}
+			, #{createUser}
+			, NOW()
+			, null
+			, null
+			, 0
+		)
+	</insert>
+	
+	<!-- 상세조회 SQL -->
+	<select id="boardSelectOne" parameterType="int" resultType="com.hustar.mvc.board.vo.BoardVO">
+		SELECT
+			board_no AS boardNo
+			, board_title AS boardTitle
+			, board_contents AS boardContents
+			, create_user AS createUser
+			, create_date AS createDate
+			, update_user AS updateUser
+			, update_date AS updateDate
+			, hits
+		FROM
+			board
+		WHERE
+			board_no = #{value}
+	</select>
+	
+	<!-- 목록조회 SQL -->
+	<!--
+	<select id="boardSelectList" resultType="com.hustar.mvc.board.vo.BoardVO">
+		SELECT
+			board_no AS boardNo
+			, board_title AS boardTitle
+			, board_contents AS boardContents
+			, create_user AS createUser
+			, create_date AS createDate
+			, update_user AS updateUser
+			, update_date AS updateDate
+			, hits
+		FROM
+			board
+	-->
+	</select>
+</mapper>

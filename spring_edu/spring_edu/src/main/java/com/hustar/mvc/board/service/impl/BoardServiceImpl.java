@@ -10,16 +10,15 @@ import com.hustar.mvc.board.dao.BoardDAO;
 import com.hustar.mvc.board.service.BoardService;
 import com.hustar.mvc.board.vo.BoardVO;
 
-@Service
+@Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
 	@Resource(name = "boardDAO")
 	private BoardDAO boardDAO;
 
 	@Override
-	public void boardInsert(String boardTitle, String boardContents, String createUser) {
-		// TODO Auto-generated method stub
-		
+	public int boardInsert(String boardTitle, String boardContents, String createUser) {
+		return boardDAO.boardInsert(boardTitle,  boardContents, createUser);
 	}
 
 	@Override
@@ -35,9 +34,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void boardSelectOne(int boardNo) {
-		// TODO Auto-generated method stub
-		
+	public BoardVO boardSelectOne(int boardNo) {
+		return boardDAO.boardSelectOne(boardNo);
 	}
 
 	@Override

@@ -7,20 +7,20 @@ import com.hustar.mvc.board.vo.BoardVO;
 public interface BoardService {
 	
 	/** 
-	 * ÀÛ¼ºÀÚ: SON
-	 * ÀÛ¼ºÀÏ: 220609
-	 * ³»¿ë: °Ô½Ã±Û µî·Ï ±â´É
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: SON
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: 220609
+	 * ï¿½ï¿½ï¿½ï¿½: ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 * 
 	 * @param boardTitle
 	 * @param boardContents
 	 * @param createUser
 	 */
-	public void boardInsert (String boardTitle, String boardContents, String createUser);
+	public int boardInsert (String boardTitle, String boardContents, String createUser);
 	
 	/** 
-	 * ÀÛ¼ºÀÚ: SON
-	 * ÀÛ¼ºÀÏ: 220609
-	 * ³»¿ë: °Ô½Ã±Û ¼öÁ¤ ±â´É
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: SON
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: 220609
+	 * ï¿½ï¿½ï¿½ï¿½: ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 * 
 	 * @param boardNo
 	 * @param boardTitle
@@ -30,28 +30,28 @@ public interface BoardService {
 	public void boardUpdate (int boardNo, String boardTitle, String boardContents, String updateUser);
 	
 	/** 
-	 * ÀÛ¼ºÀÚ: SON
-	 * ÀÛ¼ºÀÏ: 220609
-	 * ³»¿ë: °Ô½Ã±Û ¸ñ·Ï Á¶È¸ ±â´É
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: SON
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: 220609
+	 * ï¿½ï¿½ï¿½ï¿½: ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ï¿½
 	 * 
 	 * @param startIndex
 	 * @param boardLength
 	 */
-	public List<BoardVO> boardSelectList (int startIndex, int boardLength);
+	public List<BoardVO> boardSelectList(int startIndex, int boardLength);
 	
 	/** 
-	 * ÀÛ¼ºÀÚ: SON
-	 * ÀÛ¼ºÀÏ: 220609
-	 * ³»¿ë: °Ô½Ã±Û »ó¼¼ Á¶È¸ ±â´É
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: SON
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: 220609
+	 * ï¿½ï¿½ï¿½ï¿½: ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ï¿½
 	 * 
 	 * @param boardNo
 	 */
-	public void boardSelectOne (int boardNo);
+	public BoardVO boardSelectOne (int boardNo);
 	
 	/** 
-	 * ÀÛ¼ºÀÚ: SON
-	 * ÀÛ¼ºÀÏ: 220609
-	 * ³»¿ë: °Ô½Ã±Û »èÁ¦ ±â´É
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: SON
+	 * ï¿½Û¼ï¿½ï¿½ï¿½: 220609
+	 * ï¿½ï¿½ï¿½ï¿½: ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 * 
 	 * @param boardNo
 	 */

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hustar.mvc.board.vo.BoardVO;
 
 /**
- * °Ô½Ã±Û Database Access Object (DB Á¢±Ù ±â´ÉÀ» ´ã´çÇÏ´Â Object)
+ * ï¿½Ô½Ã±ï¿½ Database Access Object (DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Object)
  */
 @Repository
 public class BoardDAO {
@@ -19,9 +19,17 @@ public class BoardDAO {
 	@Resource(name = "eduSqlSession")
 	private SqlSession sqlSession;
 	
-	public void boardInsert(String boardTitle, String boardContents, String createUser) {
-		// TODO Auto-generated method stub
+	public int boardInsert(String boardTitle, String boardContents, String createUser) {
+		BoardVO bvo = new BoardVO();
+		bvo.setBoardTitle(boardTitle);
+		bvo.setBoardContents(boardContents);
+		bvo.setCreateUser(createUser);
 		
+		sqlSession.insert("boardMapper.boardInsert", bvo);
+		
+		System.out.print("bvo.getBoardNo(): " + bvo.getBoardNo());
+		
+		return bvo.getBoardNo();
 	}
 
 	public void boardUpdate(int boardNo, String boardTitle, String boardContents, String updateUser) {
@@ -30,13 +38,11 @@ public class BoardDAO {
 	}
 
 	public List<BoardVO> boardSelectList(int startIndex, int boardLength) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void boardSelectOne(int boardNo) {
-		// TODO Auto-generated method stub
-		
+	public BoardVO boardSelectOne(int boardNo) {
+		return sqlSession.selectOne("boardMapper.boardSelectOne", boardNo);
 	}
 
 	public void boardDelete(int boardNo) {
